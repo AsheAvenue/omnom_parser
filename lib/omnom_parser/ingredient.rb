@@ -9,9 +9,13 @@ class Ingredient
   end
 
   def self.contains_numeric_values(ingredient_string)
-    words = ingredient_string.split
-    numeric_words = words.select { |word| /[0-9]/.match(word) || word.in_numbers > 0 }
-    numeric_words.size > 0
+    if ingredient_string
+      words = ingredient_string.split
+      numeric_words = words.select { |word| /[0-9]/.match(word) || word.in_numbers > 0 }
+      numeric_words.size > 0
+    else
+      false
+    end
   end
 
   def self.starts_with_numeric_value(ingredient_string)
