@@ -38,7 +38,8 @@ class Technique
     # we could benefit by extracting the "val" object to its own class
     if node
       val = node.try(:text) || node
-      val.gsub!(/\s+/, " ").strip
+      val.gsub!(/\s+/, " ")
+      val.strip!
 
       #remove a substring
       if strategy['remove_substring']
