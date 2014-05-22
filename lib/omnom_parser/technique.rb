@@ -138,11 +138,21 @@ class Technique
   
   def self.hour_minute(node, strategy)
     if node
-      start = node.text.downcase.gsub(/\s+/, "").gsub("min", "").strip
+      val = node.try(:text) || node
+      val.gsub!(/\s+/, " ")
+      val.strip!
+
+      start = val.downcase.gsub(/\s+/, "").gsub("min", "").strip
       vals = start.split("hr")
 
-      # strip non-numeric, non-'.' characters and convert to integers to calculate total time
-      val = "#{(vals[0].gsub(/[^0-9.]/, '').to_i * 60) + (vals[1] ? vals[1].gsub(/[^0-9.]/, '').to_i : 0)}"
+      if vals.size > 1  # i.e. X hr(s) Y (mins)
+        # strip non-numeric, non-'.' characters and convert to integers to calculate total time
+        val = "#{(vals[0].gsub(/[^0-9.]/, '').to_i * 60) + (vals[1] ? vals[1].gsub(/[^0-9.]/, '').to_i : 0)}"
+      else              # i.e. X (hr|min)
+        val = vals[0].gsub(/[^0-9.]/, '').to_i
+        val *= 60 if start.index('hr')
+        val.to_s
+      end
     else
       val = ''
     end
