@@ -1,9 +1,11 @@
 # encoding: utf-8
 
 class Recipe
-  attr_accessor :name, :yield, :prep_time, :cook_time, :total_time, :serving_size, :image_url, :ingredients, :instructions, :description
+  attr_accessor :name, :yield, :prep_time, :cook_time, :total_time, :serving_size, :image_url, :ingredients, :instructions, :description, :word_count, :unrecognized_word_count
   
   def initialize
+    @word_count = 0
+    @unrecognized_word_count = 0
     @ingredients = Array.new #array of IngredientList objects
     @instructions = Array.new #array of strings
   end
